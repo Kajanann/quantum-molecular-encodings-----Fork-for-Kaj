@@ -86,7 +86,7 @@ for i in range(n):
 tanimoto_df = pd.DataFrame(tanimoto_matrix, index=smiles_list, columns=smiles_list)
 tanimoto_df
 
-fig, ax = subplots(figsize=(20,20))
+fig, ax = subplots(figsize=(6,6))
 ax.axis('off')
 ax.table(cellText = tanimoto_df.values, rowLabels = tanimoto_df.index ,colLabels = tanimoto_df.columns, loc = 'center', cellLoc = 'center')
 
