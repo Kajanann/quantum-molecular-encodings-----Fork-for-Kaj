@@ -84,7 +84,7 @@ for i in range(n):
 
 # Display the Tanimoto similarity matrix
 tanimoto_df = pd.DataFrame(tanimoto_matrix, index=smiles_list, columns=smiles_list)
-tanimoto_df_rounded = tanimoto_df.round(2)
+tanimoto_df_rounded = tanimoto_df.round(6)
 
 fig, ax = subplots(figsize=(12, 8))
 ax.axis('off')
