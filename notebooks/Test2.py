@@ -54,8 +54,8 @@ from numpy.random import rand
 from matplotlib.pyplot import subplots
 
 # Define the SMILES strings for the alkanes
-smiles_list = np.array(["CC","CCC", "CCCC", "CCCCC", "CCCCCC", "CCCCCCC", "CCCCCCCC", "CCCCCCCCC", "CCCCCCCCCC"])
-# smiles_list = np.array(["C1CC1", "C1CCC1", "C1CCCC1", "C1CCCCC1", "C1CCCCCC1", "C1CCCCCCC1", "C1CCCCCCCC1", "C1CCCCCCCCC1"])
+#smiles_list = np.array(["CC","CCC", "CCCC", "CCCCC", "CCCCCC", "CCCCCCC", "CCCCCCCC", "CCCCCCCCC", "CCCCCCCCCC"])
+smiles_list = np.array(["C1CC1", "C1CCC1", "C1CCCC1", "C1CCCCC1", "C1CCCCCC1", "C1CCCCCCC1", "C1CCCCCCCC1", "C1CCCCCCCCC1"])
 # smiles_list = np.array(["C=C/C=C/CC#N", "C=CC(=C)CC#N"])
 # smiles_list = np.array(['c1ccccc1', 'c1c2ccccc2ccc1', 'c1ccc2cc3ccccc3cc2c1', 'c1c2cc3cc4ccccc4cc3cc2ccc1', 'c1c2cc3cc4cc5ccccc5cc4cc3cc2ccc1'])
 
@@ -95,7 +95,7 @@ table.set_fontsize(8)
 table.scale(1.2, 1.5)
 
 plt.tight_layout()
-plt.savefig('tanimoto_table.pdf', bbox_inches='tight', dpi=300)
+plt.savefig('tanimoto_table_2.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 
 """
