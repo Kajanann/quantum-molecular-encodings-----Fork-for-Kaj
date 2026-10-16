@@ -88,7 +88,12 @@ tanimoto_df_rounded = tanimoto_df.round(2)
 
 fig, ax = subplots(figsize=(12, 8))
 ax.axis('off')
-ax.table(cellText = tanimoto_df.values, rowLabels = tanimoto_df.index ,colLabels = tanimoto_df.columns, loc = 'center', cellLoc = 'center')
+table = ax.table(cellText = tanimoto_df.values, rowLabels = tanimoto_df.index ,colLabels = tanimoto_df.columns, loc = 'center', cellLoc = 'center')
+
+table.auto_set_font_size(False)
+table.set_fontsize(8)
+table.scale(1.2, 1.5)
+
 plt.tight_layout()
 plt.savefig('tanimoto_table.pdf', bbox_inches='tight', dpi=300)
 plt.show()
