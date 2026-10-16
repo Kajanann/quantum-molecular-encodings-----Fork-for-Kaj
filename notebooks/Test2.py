@@ -89,12 +89,12 @@ tanimoto_df
 fig, ax = subplots()
 ax.axis('tight')
 ax.axis('off')
-ax.table(cellText = tanimoto_df.values, rowLabels = tanimoto_df.index ,colLabels = tanimoto_df.columns, loc = 'center', cellLoc = 'center')
+ax.table(cellText = tanimoto_df.values, rowLabels = tanimoto_df.index ,colLabels = tanimoto_df.columns, loc = 'center')
 
 plt.savefig('tanimoto_table.pdf')
 
 
 """
 #%%
-join_pdf("circuit.pdf", "Test1.pdf", "sphereplot.pdf")
+join_pdf("circuit.pdf", "Test1.pdf", "sphereplot.pdf", "tanimoto_table.pdf")
 """
