@@ -55,10 +55,10 @@ from numpy.random import rand
 from matplotlib.pyplot import subplots
 
 # Define the SMILES strings for the alkanes
-#smiles_list = np.array(["CC","CCC", "CCCC", "CCCCC", "CCCCCC", "CCCCCCC", "CCCCCCCC", "CCCCCCCCC", "CCCCCCCCCC"])
+smiles_list = np.array(["CC","CCC", "CCCC", "CCCCC", "CCCCCC", "CCCCCCC", "CCCCCCCC", "CCCCCCCCC", "CCCCCCCCCC"])
 #smiles_list = np.array(["C1CC1", "C1CCC1", "C1CCCC1", "C1CCCCC1", "C1CCCCCC1", "C1CCCCCCC1", "C1CCCCCCCC1", "C1CCCCCCCCC1"])
 #smiles_list = np.array(["C=C/C=C/CC#N", "C=CC(=C)CC#N"])
-smiles_list = np.array(['c1ccccc1', 'c1c2ccccc2ccc1', 'c1ccc2cc3ccccc3cc2c1', 'c1c2cc3cc4ccccc4cc3cc2ccc1', 'c1c2cc3cc4cc5ccccc5cc4cc3cc2ccc1'])
+#smiles_list = np.array(['c1ccccc1', 'c1c2ccccc2ccc1', 'c1ccc2cc3ccccc3cc2c1', 'c1c2cc3cc4ccccc4cc3cc2ccc1', 'c1c2cc3cc4cc5ccccc5cc4cc3cc2ccc1'])
 
 # Convert SMILES strings to RDKit molecules
 molecules = np.array([Chem.MolFromSmiles(smile) for smile in smiles_list])
@@ -110,7 +110,7 @@ overlap_df_x_yy = quantum_overlap(num_qubits, smiles_list, entangling_layer = 'r
 #TODO: test with different n_atom_to_qubit values
 overlap_df_x_zz = quantum_overlap(num_qubits, smiles_list, entangling_layer = 'rzz', n_atom_to_qubit=1, interleaved='ryy', n_layers=1)
 overlap_df = pd.DataFrame(overlap_df_x_zz, index=smiles_list, columns=smiles_list)
-
+"""
 overlap_df_rounded = overlap_df.round(6)
 fig, ax = subplots(figsize=(12, 8))
 ax.axis('off')
@@ -125,6 +125,32 @@ plt.tight_layout()
 plt.savefig('QM_table_4.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 print("QM table 4 made")
+"""
+# %%
+### Visualisation QMSE vs RDKit similarities ###
+
+from matplotlib import pyplot as plt
+
+x_low = 2 # "CC"
+x_high = 10 # "CCCCCCCCCC"
+x = np.arange(x_low,x_high+1,1)
+fig, ax = plt.subplots()
+
+ax.plot(x, tanimoto_matrix[0, :])
+ax.plot(x, overlap_df_x_xx[0, :])
+ax.plot(x, overlap_df_x_yy[0, :])
+ax.plot(x, overlap_df_x_zz[0, :])
+ax.set_xticks(x, minor=True)
+ax.set_yticks(np.arange(0, 1.1, 0.1), minor=True)
+ax.set_title('QMSE overlaps', fontsize=16)
+ax.set_xlabel('Number of carbon atoms of linear alkane $j$')
+ax.set_ylabel('Fingerprint similarity')
+ax.set_xlim(x_low, x_high)
+ax.legend(['RDKit', '$R_x$ + $R_{xx}$', '$R_x$ + $R_{yy}$', '$R_x$ + $R_{zz}$'])
+# ax.legend(['RDKit', '$R_x$ + CX + $R_{xx}$', '$R_x$ + CX + $R_{yy}$', '$R_x$ + CX + $R_{zz}$'])
+ax.tick_params(axis='x', which='both', top=False)
+ax.tick_params(axis='y', which='both', right=False)
+plt.savefig("figure_aromatic3.pdf", format="pdf", dpi=2000)
 
 
 
