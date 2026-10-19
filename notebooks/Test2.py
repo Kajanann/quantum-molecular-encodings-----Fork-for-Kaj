@@ -150,7 +150,7 @@ ax.legend(['RDKit', '$R_x$ + $R_{xx}$', '$R_x$ + $R_{yy}$', '$R_x$ + $R_{zz}$'])
 # ax.legend(['RDKit', '$R_x$ + CX + $R_{xx}$', '$R_x$ + CX + $R_{yy}$', '$R_x$ + CX + $R_{zz}$'])
 ax.tick_params(axis='x', which='both', top=False)
 ax.tick_params(axis='y', which='both', right=False)
-plt.savefig("figure_aromatic3.pdf", format="pdf", dpi=2000)
+plt.savefig("rdkit_vs_qmse_alkanes.pdf", format="pdf", dpi=2000)
 
 
 
