@@ -128,7 +128,7 @@ print("QM table 4 made")
 """
 # %%
 ### Visualisation QMSE vs RDKit similarities ###
-
+"""
 from matplotlib import pyplot as plt
 
 x_low = 2 # "CC"
@@ -151,6 +151,60 @@ ax.legend(['RDKit', '$R_x$ + $R_{xx}$', '$R_x$ + $R_{yy}$', '$R_x$ + $R_{zz}$'])
 ax.tick_params(axis='x', which='both', top=False)
 ax.tick_params(axis='y', which='both', right=False)
 plt.savefig("rdkit_vs_qmse_alkanes.pdf", format="pdf", dpi=2000)
+
+"""
+
+
+smiles_list = np.array(["CC","CCC", "CCCC", "CCCCC"])
+molecules = np.array([Chem.MolFromSmiles(smile) for smile in smiles_list])
+num_qubits = max(mol.GetNumAtoms() for mol in molecules if mol is not None)
+
+
+fpgen = rdFingerprintGenerator.GetRDKitFPGenerator(fpSize=2048)
+fingerprints = ([fpgen.GetFingerprint(mol) for mol in molecules])
+
+n = len(fingerprints)
+tanimoto_matrix = np.zeros((n, n))
+
+for i in range(n):
+    for j in range(n):
+        if i != j:
+            tanimoto_matrix[i][j] = DataStructs.FingerprintSimilarity(fingerprints[i], fingerprints[j])
+        else:
+            tanimoto_matrix[i][j] = 1.0  # Similarity with itself is 1
+
+
+tanimoto_df = pd.DataFrame(tanimoto_matrix, index=smiles_list, columns=smiles_list)
+tanimoto_df
+
+# %%
+### QMSE with noisy backends ###
+
+from qiskit_ibm_runtime.fake_provider import FakeTorino
+from quantum_molecular_encodings.supporting_functions import quantum_sampler_overlap
+
+num_shots = 1000
+backend = FakeTorino()
+sampler_df_x_xx = quantum_sampler_overlap(num_shots, backend, smiles_list, entangling_layer = 'rxx', n_atom_to_qubit=1, interleaved='cz', n_layers=3)
+sampler_df_x_yy = quantum_sampler_overlap(num_shots, backend, smiles_list, entangling_layer = 'ryy', n_atom_to_qubit=1, interleaved='cz', n_layers=3)
+sampler_df_x_zz = quantum_sampler_overlap(num_shots, backend, smiles_list, entangling_layer = 'rzz', n_atom_to_qubit=1, interleaved='cz', n_layers=3)
+sampler_df = pd.DataFrame(sampler_df_x_xx, index=smiles_list, columns=smiles_list)
+sampler_df
+
+sampler_df_rounded = sampler_df.round(6)
+fig, ax = subplots(figsize=(12, 8))
+ax.axis('off')
+plt.title("QM similarity overlap matrix with Noisy Torino backend ")
+table = ax.table(cellText = sampler_df_rounded.values, rowLabels = sampler_df_rounded.index ,colLabels = sampler_df_rounded.columns, loc = 'center', cellLoc = 'center')
+
+table.auto_set_font_size(False)
+table.set_fontsize(8)
+table.scale(1.2, 1.5)
+
+plt.tight_layout()
+plt.savefig('Torino simulation test', bbox_inches='tight', dpi=300)
+plt.show()
+print("Torino made ")
 
 
 
