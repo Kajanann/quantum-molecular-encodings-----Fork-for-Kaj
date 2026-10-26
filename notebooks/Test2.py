@@ -87,7 +87,7 @@ for i in range(n):
 tanimoto_df = pd.DataFrame(tanimoto_matrix, index=smiles_list, columns=smiles_list)
 tanimoto_df_rounded = tanimoto_df.round(6)
 
-"""
+
 fig, ax = subplots(figsize=(12, 8))
 ax.axis('off')
 table = ax.table(cellText = tanimoto_df_rounded.values, rowLabels = tanimoto_df_rounded.index ,colLabels = tanimoto_df_rounded.columns, loc = 'center', cellLoc = 'center')
@@ -99,7 +99,7 @@ table.scale(1.2, 1.5)
 plt.tight_layout()
 plt.savefig('tanimoto_table_4.pdf', bbox_inches='tight', dpi=300)
 plt.show()
-"""
+
 
 ### QMSE similarities ###
 
@@ -110,7 +110,7 @@ overlap_df_x_yy = quantum_overlap(num_qubits, smiles_list, entangling_layer = 'r
 #TODO: test with different n_atom_to_qubit values
 overlap_df_x_zz = quantum_overlap(num_qubits, smiles_list, entangling_layer = 'rzz', n_atom_to_qubit=1, interleaved='ryy', n_layers=1)
 overlap_df = pd.DataFrame(overlap_df_x_zz, index=smiles_list, columns=smiles_list)
-"""
+
 overlap_df_rounded = overlap_df.round(6)
 fig, ax = subplots(figsize=(12, 8))
 ax.axis('off')
@@ -125,7 +125,7 @@ plt.tight_layout()
 plt.savefig('QM_table_4.pdf', bbox_inches='tight', dpi=300)
 plt.show()
 print("QM table 4 made")
-"""
+
 # %%
 ### Visualisation QMSE vs RDKit similarities ###
 """
