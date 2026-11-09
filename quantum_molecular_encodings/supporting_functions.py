@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem.Draw import rdMolDraw2D
-#import cairosvg
+#import CairoSVG
 
 from qiskit import QuantumCircuit
 from qiskit.quantum_info import Statevector
